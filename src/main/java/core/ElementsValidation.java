@@ -27,7 +27,7 @@ public class ElementsValidation
  //   public  String    page_Title    = "id_f_title";
  //   public  String    currentLocation = "id_current_location";
     
-    
+    public static String jsonPath ="./src/test/resources/data/mainPage.json";
     public static String url = "http://learn2test.net/qa/apps/sign_up/v1/";
     public static   WebDriver driver ;
     
@@ -35,12 +35,57 @@ public class ElementsValidation
  		driver = new FirefoxDriver();
  		driver.get(url);
  		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		
+ 		 loadTestData(jsonPath);
  	}
  
+	public ArrayList<MainPageElements> lampe = new ArrayList<MainPageElements>();
     
+    public void loadTestData(String path){
+	     Long tmp = 0L;
+	     JSONParser parser = new JSONParser();
+	      //int i = 0;
+	    try {
+	        JSONArray a = (JSONArray) parser.parse(new FileReader(path));
+	        for (Object o : a)
+	        {
+	        	MainPageElements mpe = new MainPageElements();
+	            JSONObject elements= (JSONObject) o;
+
+	            mpe.locator = (String) elements.get("locator");                    
+	            mpe.isPresent = (Boolean) elements.get("isPresent");            
+	            mpe.isDisplayed = (Boolean) elements.get("isDisplayed");         
+	            mpe.isEnabled = (Boolean) elements.get("isEnabled");   
+	            tmp = (Long)elements.get("location_X");   
+	            mpe.location_X = tmp.intValue();   
+	            tmp = (Long)elements.get("location_Y"); 
+	            mpe.location_Y = tmp.intValue();      
+	            tmp = (Long)elements.get("sizeWidth"); 
+	            mpe.sizeWidth = tmp.intValue();   
+	            tmp = (Long)elements.get("sizeHeight");
+	            mpe.sizeHeight = tmp.intValue();
+
+	            lampe.add(mpe);
+	            
+	            //String   key = lampe.get(0).locator;
+	      //    String   element = lampe.get(i).locator;
+	     //     String   element = lampe.get(i).locator;
+	            //System.out.println("collection element #" + i + ": " + key);
+	            //i++;
+	        }
+
+
+	    } catch (FileNotFoundException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (ParseException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
     
- 
+    }
     
     public  Dimension get_element_Dimension( String locator) {
         Dimension el_Size = driver.findElement(By.id(locator)).getSize();
