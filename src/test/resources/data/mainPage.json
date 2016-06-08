@@ -1,0 +1,32 @@
+
+[{
+		"description":  "Dynamic text quote",
+		"locator":		"id_quotes",
+		"isPresent":	true,
+		"isDisplayed":	true,
+		"isEnabled":	true,
+		"location_X":	8,
+		"location_Y":	48,
+		"sizeWidth":	1424,
+		"sizeHeight":	20		},
+ 
+{		"description":	"Page title (Sing Up)",
+		"locator":		"id_f_title",
+		"isPresent":	true,
+		"isDisplayed":	true,
+		"isEnabled":	true,
+		"location_X":	320,
+		"location_Y":	86,
+		"sizeWidth":	151,
+		"sizeHeight":	45		},
+ 
+{		"description":	"Dynamic text (current location)",
+		"locator":		"id_current_location",
+		"isPresent":	true,
+		"isDisplayed":	true,
+		"isEnabled":	true,
+		"location_X":	916,
+		"location_Y":	70,
+		"sizeWidth":	178,
+		"sizeHeight":	25		}
+	]
