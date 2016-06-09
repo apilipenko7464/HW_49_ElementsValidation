@@ -1,9 +1,11 @@
 package core;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONArray;
@@ -16,46 +18,103 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
+import org.testng.Assert;
+
+
 
 public class ElementsValidation 
 {
 
-  //  public  String    dynText_qoute = "id_quotes";
- //   public  String    page_Title    = "id_f_title";
- //   public  String    currentLocation = "id_current_location";
-    
-    public static String jsonPath ="./src/test/resources/data/mainPage.json";
-    public static String url = "http://learn2test.net/qa/apps/sign_up/v1/";
     public static   WebDriver driver ;
+	
+    public static String jsonPath =null;
+    public static String url = null;
+     
+  
+    public void readProperties (String file_path){
+    	// String	file_path = "./src/test/resources/data/DataSource.properties";
+    try {
+	Properties property = new Properties();
+	property.load(new FileInputStream(file_path));
+	
+	jsonPath = property.getProperty("jsonPath");		
+	url = property.getProperty("url");
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Method 'readProperties()' - BLOCK");
+			System.out.println();
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Method 'readProperties()' - BLOCK");
+			System.out.println();
+			System.out.println(e.getMessage());
+		}	
+
+}//END readProperties	
+
     
     public void before(){
  		driver = new FirefoxDriver();
  		driver.get(url);
  		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
- 		 loadTestData(jsonPath);
+ 		 loadTestData(jsonPath);   //comment this if use loadTestDataLoop(jsonPath); 
+ 		//loadTestDataLoop(jsonPath);    ** Used only with test_Common_inLoop_JsonFile()
  	}
  
+    public void after(){
+		driver.quit();
+	}
+
+    
+    //@Test  Used for lopping through all elements in JSONfile
+    public void test_0101_dynText_qoute_isPresent (MainPageElements mpe) {
+  	//String   el_locator = elValid.dynText_qoute;
+      Assert.assertEquals(this.element_isPresent(mpe.locator), (boolean)mpe.isPresent);
+    }
+      
+    //@Test   
+    public void test_0102_dynText_qoute_Validation (MainPageElements mpe) {
+
+  	  Assert.assertEquals((boolean)this.element_isDisplayed(mpe.locator), (boolean)mpe.isDisplayed);
+  	  Assert.assertEquals((boolean)this.element_isEnabled(mpe.locator), (boolean)mpe.isEnabled);
+  	  Assert.assertEquals((int)this.get_element_Location(mpe.locator).getX(), (int)mpe.location_X);
+  	  Assert.assertEquals((int)this.get_element_Location(mpe.locator).getY(), (int)mpe.location_Y);
+  	  Assert.assertEquals((int)this.get_element_Dimension(mpe.locator).getWidth(), (int)mpe.sizeWidth);
+  	  Assert.assertEquals((int)this.get_element_Dimension(mpe.locator).getHeight(), (int)mpe.sizeHeight);
+    }
+    
+    
+    //creating ArrayList collection where every element has data type custom object MainPageElements
 	public ArrayList<MainPageElements> lampe = new ArrayList<MainPageElements>();
     
     public void loadTestData(String path){
 	     Long tmp = 0L;
 	     JSONParser parser = new JSONParser();
-	      //int i = 0;
+	      int i = 0;
+	      MainPageElements mpe = null;
 	    try {
+	    	    	
+	        //1.  
+	    	
 	        JSONArray a = (JSONArray) parser.parse(new FileReader(path));
+	       
+	        //2. every element of Array "a" is object "o" of Object type 
 	        for (Object o : a)
 	        {
-	        	MainPageElements mpe = new MainPageElements();
-	            JSONObject elements= (JSONObject) o;
-
+	        	
+	      	//3. inicialization of class MainPageElements inside method
+	        	mpe = new MainPageElements();   //inicialization of class
+	      
+	        //4. here is casting data from javas' datatype Object to JSONObject	
+	        	JSONObject elements= (JSONObject) o;
+	        	
+            //5. Copy value from JSONObject to custom object   MainPageElements
 	            mpe.locator = (String) elements.get("locator");                    
 	            mpe.isPresent = (Boolean) elements.get("isPresent");            
 	            mpe.isDisplayed = (Boolean) elements.get("isDisplayed");         
 	            mpe.isEnabled = (Boolean) elements.get("isEnabled");   
-	            tmp = (Long)elements.get("location_X");   
+	            tmp = (Long)elements.get("location_X");  //casting Long to int 
 	            mpe.location_X = tmp.intValue();   
 	            tmp = (Long)elements.get("location_Y"); 
 	            mpe.location_Y = tmp.intValue();      
@@ -66,40 +125,35 @@ public class ElementsValidation
 
 	            lampe.add(mpe);
 	            
-	            //String   key = lampe.get(0).locator;
-	      //    String   element = lampe.get(i).locator;
-	     //     String   element = lampe.get(i).locator;
-	            //System.out.println("collection element #" + i + ": " + key);
-	            //i++;
+                System.out.println("collection element #" + i + ": " + lampe.get(i).locator);
+                i++;
 	        }
 
 
 	    } catch (FileNotFoundException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    } catch (ParseException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    }
+            // TODO Auto-generated catch block
+            e.printStackTrace(); System.out.println(mpe.locator);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace(); System.out.println(mpe.locator);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace(); System.out.println(mpe.locator);
+        }
+
     
     }
     
     public  Dimension get_element_Dimension( String locator) {
         Dimension el_Size = driver.findElement(By.id(locator)).getSize();
-    //    System.out.println("Size Width: " + el_Size.getWidth());
-    //    System.out.println("Size Height: " + el_Size.getHeight());
-      
+     
         return el_Size;
     }
 
     public  Point get_element_Location( String locator) {
 
             Point el_Location = driver.findElement(By.id(locator)).getLocation();
-      //      System.out.println("Location X: " + el_Location.getX());
-      //      System.out.println("Location Y: " + el_Location.getY());
+
             return el_Location;
 
     }
@@ -129,5 +183,49 @@ public class ElementsValidation
         }
         return isPresent;
     }
+
+    
+    public void loadTestDataLoop(String path){
+	     Long tmp = 0L;
+	     JSONParser parser = new JSONParser();
+	     int i = 0;
+	    try {
+	        JSONArray a = (JSONArray) parser.parse(new FileReader(path));
+	        for (Object o : a)
+	        {
+	        	MainPageElements mpe = new MainPageElements();
+	            JSONObject elements= (JSONObject) o;
+
+	            mpe.locator = (String) elements.get("locator");                    
+	            mpe.isPresent = (Boolean) elements.get("isPresent");            
+	            mpe.isDisplayed = (Boolean) elements.get("isDisplayed");         
+	            mpe.isEnabled = (Boolean) elements.get("isEnabled");   
+	            tmp = (Long)elements.get("location_X");   
+	            mpe.location_X = tmp.intValue();   
+	            tmp = (Long)elements.get("location_Y"); 
+	            mpe.location_Y = tmp.intValue();      
+	            tmp = (Long)elements.get("sizeWidth"); 
+	            mpe.sizeWidth = tmp.intValue();   
+	            tmp = (Long)elements.get("sizeHeight");
+	            mpe.sizeHeight = tmp.intValue();
+
+	            lampe.add(mpe);
+               System.out.println("collection element #" + i + ": " + lampe.get(i).locator);
+               i++;
+           }
+
+
+	    } catch (FileNotFoundException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (ParseException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+   
+   }
     
 }
