@@ -2,9 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="suite" parallel="methods" thread-count="4">
     <test name="test">
-        <listeners>
-            <listener class-name="net.sf.testng.databinding.TestAnnotationTransformer" />
-        </listeners>
+        
         <!--  
 						        <groups>
 						            <run>
@@ -16,21 +14,14 @@
 						            </run>
 						        </groups>-->
         <classes>
-            <class name="core.DBTest">
+            <class name="core.ElementsValidationTest">
                 <methods>
-                    <include name="testSumCSV" />
-                    <include name="testMultiplyCSV" />
-                    <include name="testSubstructCSV" />
-                    <include name="testDivideCSV" />
-                    <include name="testSumProperties" />
-                    <include name="testCircleProperties"/>
-                    <include name="testGetTitleProperties" />
-                    <include name="testSumText" />
-                    <include name="testMultipleTitleXML"/>
-                    <include name="testSumXML" />
-                    <include name="testDivideXML" />
-                    <include name="testSumJSON" />
-                    <include name="testMultipleTitleJSON" />
+                    <include name="test_0101_1st_element_isPresent" />
+					<include name="test_0102_1st_element_Validation" />
+					<include name="test_0201_2nd_element_isPresent" />
+					<include name="test_0202_2nd_element_Validation" />
+					<include name="test_0301_3rd_element_isPresent" />
+					<include name="test_0302_3rd_element_Validation" />
                 </methods>
             </class>
         </classes>
