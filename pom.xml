@@ -2,58 +2,113 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>core</groupId>
+ <groupId>core</groupId>
   <artifactId>HW_49_ElementsValidation</artifactId>
   <version>1.1</version>
   <packaging>jar</packaging>
 
   <name>HW_49_ElementsValidation</name>
   <url>http://maven.apache.org</url>
-
+  
+ 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <!-- <aspectj.version>1.8.9</aspectj.version> -->
+     <!-- <allure.version>1.4.16</allure.version> -->
   </properties>
 
-  <dependencies>
- 		<dependency>
+    <dependencies>
+
+
+    <!--    Parsing json source file   -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <!-- Parsing JSON web-services -->
+        <dependency>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.9.10</version>
         </dependency>
 
-<!-- http://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
-<dependency>
-    <groupId>com.googlecode.json-simple</groupId>
-    <artifactId>json-simple</artifactId>
-    <version>1.1.1</version>
-</dependency>
-
-
-
         <dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>2.50.0</version>
-    </dependency>
-    <dependency>
+         </dependency>
+
+
+
+        <!-- This is Java library to analyze User-Agent strings, to detect the type and the associated
+         operating system of a client like Mobile Firefox 9.0 on Android or Mobile Safari 5.1 on iOS -->
+        <dependency>
+            <groupId>net.sf.uadetector</groupId>
+            <artifactId>uadetector-resources</artifactId>
+            <version>2014.04</version>
+        </dependency>
+
+             <dependency>
                      <groupId>org.apache.maven.plugins</groupId>
                      <artifactId>maven-surefire-report-plugin</artifactId>
                      <version>2.19.1</version>
               </dependency>
   </dependencies>
+
+
        <reporting>
               <plugins>
+
                      <plugin>
                            <groupId>org.apache.maven.plugins</groupId>
                            <artifactId>maven-surefire-report-plugin</artifactId>
                            <version>2.19.1</version>
+                         <configuration>
+                             <goal>report-only</goal>
+                         </configuration>
                      </plugin>
+
+                      <plugin>
+                          <artifactId>maven-project-info-reports-plugin</artifactId>
+                          <version>2.9</version>
+                      </plugin>
+
+
               </plugins>
-       </reporting> 
+
+
+       </reporting>
   
+
+
   <build>
 		<plugins>
-			<plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!--  This plugin uses for build fat jar file with main method on "mvn package" phase -->
+				<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.6</version>
@@ -61,7 +116,7 @@
 					<archive>
 						<manifest>
 						 <!--<mainClass>core.SignUp</mainClass> -->
-								 <mainClass>${mainClass}</mainClass>  
+                            <!--	 <mainClass>${mainClass}</mainClass>  -->
 						</manifest>
 					</archive>
 					<descriptorRefs>
@@ -78,7 +133,17 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
-	</build>
-	
-	</project>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
+
+
+
+           </plugins>
+       </build>
+
+
+       </project>

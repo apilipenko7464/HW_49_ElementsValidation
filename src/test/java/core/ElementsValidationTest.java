@@ -37,7 +37,7 @@ public class ElementsValidationTest {
   
   
   @Test
-  public void test_0101_3rd_element_isPresent () {
+  public void test_0101_1st_element_isPresent () {
       try {
           MainPageElements mpe = elValid.lampe.get(0);
           Assert.assertEquals((boolean) elValid.element_isPresent(elValid.lampe.get(3).locator), (boolean) mpe.isPresent);
@@ -49,7 +49,7 @@ public class ElementsValidationTest {
 
 
   @Test
-  public void test_0102_3rd_element_Validation () {
+  public void test_0102_1st_element_Validation () {
       try {
          
           MainPageElements mpe = elValid.lampe.get(0);

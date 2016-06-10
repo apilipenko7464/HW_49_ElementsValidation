@@ -54,10 +54,12 @@ public class ElementsValidation
 }//END readProperties	
 
     
-    public void before(){
+    public void before() {
  		driver = new FirefoxDriver();
- 		driver.get(url);
- 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+ 		driver.manage().window().maximize();
+ 		driver.get(url);		
+ 		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+ 		 
  		 loadTestData(jsonPath);   //comment this if use loadTestDataLoop(jsonPath); 
  		//loadTestDataLoop(jsonPath);    ** Used only with test_Common_inLoop_JsonFile()
  	}
