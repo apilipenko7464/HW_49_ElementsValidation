@@ -15,6 +15,7 @@
 						        </groups>-->
         <classes>
             <class name="core.ElementsValidationTest">
+            <class name="core.ConfirmPageTest">
                 <methods>
                     <include name="test_0101_1st_element_isPresent" />
 					<include name="test_0102_1st_element_Validation" />
@@ -22,6 +23,7 @@
 					<include name="test_0202_2nd_element_Validation" />
 					<include name="test_0301_3rd_element_isPresent" />
 					<include name="test_0302_3rd_element_Validation" />
+                    <include name="test_Common_inLoop_JsonFile" />
                 </methods>
             </class>
         </classes>

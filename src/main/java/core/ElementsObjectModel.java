@@ -1,6 +1,6 @@
 package core;
 
-public class MainPageElements {
+public class ElementsObjectModel {
 	
  public String  locator;
   
@@ -12,5 +12,9 @@ public class MainPageElements {
  public int location_Y;
  public int sizeWidth;
  public int sizeHeight;
-	
+
+ public void printMpe() {
+  System.out.println(locator + " " + isPresent + " " + isDisplayed + " " + isEnabled + " " + location_X + " " + location_Y + " " + sizeHeight + " " + sizeWidth);
+ }
+
 }

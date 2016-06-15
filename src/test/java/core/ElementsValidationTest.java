@@ -7,12 +7,13 @@ import org.testng.annotations.AfterClass;
 
 public class ElementsValidationTest {
 
-	      public static ElementsValidation elValid = new ElementsValidation ();
+	      public  ElementsValidation elValid = new ElementsValidation ();
  
   @BeforeClass
   public void beforeClass() throws Exception{
 	  elValid.readProperties("./src/test/resources/data/DataSource.properties");
 	  elValid.before();
+	  
 
   }
 
@@ -25,7 +26,7 @@ public class ElementsValidationTest {
 /**  
   @Test 
   public void test_Common_inLoop_JsonFile () {
-	  for (MainPageElements mpe : elValid.lampe) {
+	  for (ElementsObjectModel mpe : elValid.lampe) {
 		//  System.out.println("collection element #" + elValid.lampe.indexOf((Object)mpe) + " with locator=" + mpe.locator);
 		  elValid.test_0101_dynText_qoute_isPresent(mpe);
 		  elValid.test_0102_dynText_qoute_Validation (mpe);
@@ -39,7 +40,7 @@ public class ElementsValidationTest {
   @Test
   public void test_0101_1st_element_isPresent () {
       try {
-          MainPageElements mpe = elValid.lampe.get(0);
+          ElementsObjectModel mpe = elValid.lampe.get(0);
           Assert.assertEquals((boolean) elValid.element_isPresent(elValid.lampe.get(3).locator), (boolean) mpe.isPresent);
 
       } catch(Exception e) {
@@ -52,7 +53,7 @@ public class ElementsValidationTest {
   public void test_0102_1st_element_Validation () {
       try {
          
-          MainPageElements mpe = elValid.lampe.get(0);
+          ElementsObjectModel mpe = elValid.lampe.get(0);
           Assert.assertEquals((boolean) elValid.element_isDisplayed(mpe.locator), (boolean) mpe.isDisplayed);
           Assert.assertEquals((boolean) elValid.element_isEnabled(mpe.locator), (boolean) mpe.isEnabled);
           Assert.assertEquals((int) elValid.get_element_Location(mpe.locator).getX(), (int) mpe.location_X);
@@ -69,9 +70,9 @@ public class ElementsValidationTest {
   public void test_0201_2nd_element_isPresent () {
       try {
 
-          MainPageElements mpe = elValid.lampe.get(1);
+          ElementsObjectModel mpe = elValid.lampe.get(1);
           Assert.assertEquals((boolean) elValid.element_isPresent(elValid.lampe.get(1).locator), (boolean) mpe.isPresent);
-          System.out.println("index 1 locator: " + mpe.locator + " isPresent:" + mpe.isPresent.toString());
+       //   System.out.println("index 1 locator: " + mpe.locator + " isPresent:" + mpe.isPresent.toString());
       } catch(Exception e) {
           e.printStackTrace();
       }
@@ -82,7 +83,7 @@ public class ElementsValidationTest {
   public void test_0202_2nd_element_Validation () {
       try {
 
-          MainPageElements mpe = elValid.lampe.get(1);
+          ElementsObjectModel mpe = elValid.lampe.get(1);
           Assert.assertEquals((boolean) elValid.element_isDisplayed(mpe.locator), (boolean) mpe.isDisplayed);
           Assert.assertEquals((boolean) elValid.element_isEnabled(mpe.locator), (boolean) mpe.isEnabled);
           Assert.assertEquals((int) elValid.get_element_Location(mpe.locator).getX(), (int) mpe.location_X);
@@ -99,7 +100,7 @@ public class ElementsValidationTest {
   @Test
   public void test_0301_3rd_element_isPresent () {
       try {
-          MainPageElements mpe = elValid.lampe.get(3);
+          ElementsObjectModel mpe = elValid.lampe.get(3);
           Assert.assertEquals((boolean) elValid.element_isPresent(elValid.lampe.get(3).locator), (boolean) mpe.isPresent);
 
       } catch(Exception e) {
@@ -112,7 +113,7 @@ public class ElementsValidationTest {
   public void test_0302_3rd_element_Validation () {
       try {
 
-          MainPageElements mpe = elValid.lampe.get(3);
+          ElementsObjectModel mpe = elValid.lampe.get(3);
           Assert.assertEquals((boolean) elValid.element_isDisplayed(mpe.locator), (boolean) mpe.isDisplayed);
           Assert.assertEquals((boolean) elValid.element_isEnabled(mpe.locator), (boolean) mpe.isEnabled);
           Assert.assertEquals((int) elValid.get_element_Location(mpe.locator).getX(), (int) mpe.location_X);

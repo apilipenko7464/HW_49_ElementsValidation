@@ -61,22 +61,22 @@ public class ElementsValidation
  		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
  		 
  		 loadTestData(jsonPath);   //comment this if use loadTestDataLoop(jsonPath); 
- 		//loadTestDataLoop(jsonPath);    ** Used only with test_Common_inLoop_JsonFile()
+ 		//loadTestDataLoop(jsonPath);  //  ** Used only with test_Common_inLoop_JsonFile()
  	}
  
     public void after(){
 		driver.quit();
 	}
 
-    
+   /**
     //@Test  Used for lopping through all elements in JSONfile
-    public void test_0101_dynText_qoute_isPresent (MainPageElements mpe) {
+    public void test_0101_dynText_qoute_isPresent (ElementsObjectModel mpe) {
   	//String   el_locator = elValid.dynText_qoute;
       Assert.assertEquals(this.element_isPresent(mpe.locator), (boolean)mpe.isPresent);
     }
       
     //@Test   
-    public void test_0102_dynText_qoute_Validation (MainPageElements mpe) {
+    public void test_0102_dynText_qoute_Validation (ElementsObjectModel mpe) {
 
   	  Assert.assertEquals((boolean)this.element_isDisplayed(mpe.locator), (boolean)mpe.isDisplayed);
   	  Assert.assertEquals((boolean)this.element_isEnabled(mpe.locator), (boolean)mpe.isEnabled);
@@ -86,15 +86,17 @@ public class ElementsValidation
   	  Assert.assertEquals((int)this.get_element_Dimension(mpe.locator).getHeight(), (int)mpe.sizeHeight);
     }
     
+    */
+    //creating ArrayList collection where every element has data type custom object ElementsObjectModel
+	
     
-    //creating ArrayList collection where every element has data type custom object MainPageElements
-	public ArrayList<MainPageElements> lampe = new ArrayList<MainPageElements>();
+    public ArrayList<ElementsObjectModel> lampe = new ArrayList<ElementsObjectModel>();
     
     public void loadTestData(String path){
 	     Long tmp = 0L;
 	     JSONParser parser = new JSONParser();
 	      int i = 0;
-	      MainPageElements mpe = null;
+	      ElementsObjectModel mpe = null;
 	    try {
 	    	    	
 	        //1.  
@@ -105,13 +107,13 @@ public class ElementsValidation
 	        for (Object o : a)
 	        {
 	        	
-	      	//3. inicialization of class MainPageElements inside method
-	        	mpe = new MainPageElements();   //inicialization of class
+	      	//3. initialization of class ElementsObjectModel inside method
+	        	mpe = new ElementsObjectModel();   //inicialization of class
 	      
 	        //4. here is casting data from javas' datatype Object to JSONObject	
 	        	JSONObject elements= (JSONObject) o;
 	        	
-            //5. Copy value from JSONObject to custom object   MainPageElements
+            //5. Copy value from JSONObject to custom object   ElementsObjectModel
 	            mpe.locator = (String) elements.get("locator");                    
 	            mpe.isPresent = (Boolean) elements.get("isPresent");            
 	            mpe.isDisplayed = (Boolean) elements.get("isDisplayed");         
@@ -147,15 +149,12 @@ public class ElementsValidation
     }
     
     public  Dimension get_element_Dimension( String locator) {
-        Dimension el_Size = driver.findElement(By.id(locator)).getSize();
-     
+        Dimension el_Size = driver.findElement(By.id(locator)).getSize();    
         return el_Size;
     }
 
     public  Point get_element_Location( String locator) {
-
             Point el_Location = driver.findElement(By.id(locator)).getLocation();
-
             return el_Location;
 
     }
@@ -166,7 +165,6 @@ public class ElementsValidation
     }
 
     public  boolean element_isDisplayed(String locator ) {
-
             boolean el_isDisplayed = driver.findElement(By.id(locator)).isDisplayed();        
             return el_isDisplayed;
         }
@@ -176,7 +174,7 @@ public class ElementsValidation
         boolean isPresent;
 
         try {
-            isPresent= driver.findElements(By.id(locator)).size() > 0;
+            isPresent= driver.findElements(By.id(locator)).size() >= 0;
             return isPresent;
 
         } catch ( NoSuchElementException e ) {
@@ -187,47 +185,6 @@ public class ElementsValidation
     }
 
     
-    public void loadTestDataLoop(String path){
-	     Long tmp = 0L;
-	     JSONParser parser = new JSONParser();
-	     int i = 0;
-	    try {
-	        JSONArray a = (JSONArray) parser.parse(new FileReader(path));
-	        for (Object o : a)
-	        {
-	        	MainPageElements mpe = new MainPageElements();
-	            JSONObject elements= (JSONObject) o;
-
-	            mpe.locator = (String) elements.get("locator");                    
-	            mpe.isPresent = (Boolean) elements.get("isPresent");            
-	            mpe.isDisplayed = (Boolean) elements.get("isDisplayed");         
-	            mpe.isEnabled = (Boolean) elements.get("isEnabled");   
-	            tmp = (Long)elements.get("location_X");   
-	            mpe.location_X = tmp.intValue();   
-	            tmp = (Long)elements.get("location_Y"); 
-	            mpe.location_Y = tmp.intValue();      
-	            tmp = (Long)elements.get("sizeWidth"); 
-	            mpe.sizeWidth = tmp.intValue();   
-	            tmp = (Long)elements.get("sizeHeight");
-	            mpe.sizeHeight = tmp.intValue();
-
-	            lampe.add(mpe);
-               System.out.println("collection element #" + i + ": " + lampe.get(i).locator);
-               i++;
-           }
 
 
-	    } catch (FileNotFoundException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    } catch (ParseException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    }
-   
-   }
-    
 }
