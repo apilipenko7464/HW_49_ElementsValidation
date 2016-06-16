@@ -14,7 +14,7 @@
 						            </run>
 						        </groups>-->
         <classes>
-            <class name="core.ElementsValidationTest">
+            <class name="core.ElementsValidationTest"/>
             <class name="core.ConfirmPageTest">
                 <methods>
                     <include name="test_0101_1st_element_isPresent" />
